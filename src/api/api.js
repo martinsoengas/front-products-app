@@ -3,25 +3,109 @@ const rootURI = process.env.SERVER_URL
   : "http://localhost:4000";
 
 export const getAllProducts = async () => {
-  const response = await fetch(`${rootURI}/products`);
+  try {
+    const response = await fetch(`${rootURI}/products`);
 
-  if (!response.ok) {
-    throw new Error("Something went wrong");
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    const data = await response.json();
+
+    const loadedProducts = [];
+
+    for (const key in data) {
+      loadedProducts.push({
+        id: data[key]._id,
+        name: data[key].name,
+        description: data[key].description,
+        image_url: data[key].image_url,
+        price: data[key].price,
+      });
+    }
+
+    return loadedProducts;
+  } catch (error) {
+    console.log(error.message || "Failed to get products");
   }
+};
 
-  const data = await response.json();
+export const getOneProduct = async (productId) => {
+  try {
+    const response = await fetch(`${rootURI}/product/${productId}`);
 
-  const loadedProducts = [];
+    const data = await response.json();
 
-  for (const key in data) {
-    loadedProducts.push({
-      id: data[key]._id,
-      name: data[key].name,
-      description: data[key].description,
-      image_url: data[key].image_url,
-      price: data[key].price,
+    console.log(data);
+
+    if (!response.ok) {
+      throw new Error(data.message || "Could not create customer");
+    }
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addOneProduct = async (newProduct) => {
+  try {
+    const response = await fetch(`${rootURI}/new-product`, {
+      method: "POST",
+      body: JSON.stringify(newProduct),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-  }
 
-  return loadedProducts;
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Could not create customer");
+    }
+
+    return null;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateOneProduct = async (updateProduct) => {
+  try {
+    const response = await fetch(`${rootURI}/product/${updateProduct._id}`, {
+      method: "PATCH",
+      body: JSON.stringify(updateProduct),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Could not update customer");
+    }
+
+    return null;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteOneProduct = async (deleteProductId) => {
+  try {
+    const response = await fetch(`${rootURI}/product/${deleteProductId}`, {
+      method: "DELETE",
+    });
+
+    const data = response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Could not delete customer");
+    }
+
+    return null;
+  } catch (error) {
+    console.log(error);
+  }
 };
