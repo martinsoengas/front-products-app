@@ -1,5 +1,7 @@
+import ProductForm from "../components/ProductForm";
+
 const NewProduct = () => {
-  return <p>New Product</p>;
+  return <ProductForm />;
 };
 
 export default NewProduct;
