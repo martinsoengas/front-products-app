@@ -10,7 +10,6 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-
   bgcolor: "background.paper",
   border: "1px solid #000",
   boxShadow: 10,
@@ -43,12 +42,10 @@ export default function BasicModal(props) {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {props.other_info}
           </Typography>
-          <CardMedia
-            component="img"
-            width="300"
-            image={props.image}
-            alt={props.title}
-          />
+          <Box sx={{ width: "80%", margin: "0 auto" }}>
+            <CardMedia component="img" image={props.image} alt={props.title} />
+          </Box>
+
           <Button variant="contained" onClick={handleClose}>
             Close
           </Button>

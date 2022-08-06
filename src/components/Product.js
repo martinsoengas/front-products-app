@@ -14,21 +14,6 @@ const Product = (props) => {
       />
     </Grid>
   );
-
-  //   {
-  //      <li>
-  //       <h1>{name}</h1>
-  //       <h3>${price}</h3>
-  //       <img src={image_url} alt={description} height="400" />
-  //       <Modal
-  //         title={name}
-  //         content={description}
-  //         image={image_url}
-  //         other_info={price}
-  //       />
-  //     </li>
-  //   );
-  //   }
 };
 
 export default Product;
