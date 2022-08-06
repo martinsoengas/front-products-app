@@ -20,7 +20,7 @@ export const getAllProducts = async () => {
         name: data[key].name,
         description: data[key].description,
         image_url: data[key].image_url,
-        price: data[key].price,
+        price: `$${data[key].price}`,
       });
     }
 
