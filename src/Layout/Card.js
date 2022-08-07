@@ -10,7 +10,11 @@ import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
 
 export default function MediaCard(props) {
-  const { title, content, image, other_info } = props;
+  const { id, title, content, image, other_info } = props;
+
+  const deleteHandler = () => {
+    props.onDelete(id);
+  };
 
   return (
     <Card sx={{ width: "95%", margin: 1 }}>
@@ -37,7 +41,7 @@ export default function MediaCard(props) {
             </Button>
           </Typography>
           <Typography variant="button">
-            <Button variant="contained" color="error">
+            <Button variant="contained" color="error" onClick={deleteHandler}>
               Delete
             </Button>
           </Typography>

@@ -20,7 +20,7 @@ const AllProducts = () => {
 
   if (status === "pending") {
     return (
-      <section className="centered">
+      <section>
         <CircularIndeterminate />
       </section>
     );
