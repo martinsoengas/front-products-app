@@ -19,11 +19,7 @@ const AllProducts = () => {
   }, [sendRequest]);
 
   if (status === "pending") {
-    return (
-      <section>
-        <CircularIndeterminate />
-      </section>
-    );
+    return <CircularIndeterminate />;
   }
 
   return (
