@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Getting Started with this Products App (Front end)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Features of this app
 
-In the project directory, you can run:
+In this porject you can get, create, modify & delete products.
+
+## Setting up local enviroment
+
+To start this app locally first you must have the backend running. You can find it here: [Backend](https://github.com/martinsoengas/back-products-app), then you can just run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in the development mode. (o)
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+You should see all the products in a grid.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How to get, create, update or delete a product?
 
-### `npm test`
+You **get** the products automatically in the root URL '/'.\
+To **create** a product you have to press the **'NEW PRODUCT'** button located on the right side of the navbar. Then you must fill the form and press the **'CREATE'** button. A prompt will ask for confirmation.
+To **update** a product you have to press the **'EDIT'** button located on the product you want to modify. A modal will open with the last data from the product. You can update any of the information and then press the **'SAVE'** button. a prompt will ask for confirmation.
+To **delete** a product you have to press the **'DELETE'** button from the product you want to delete. A prompt will ask for confirmation.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Other functionality**
+You can view the detail of the product by pressing the 'VIEW' button from the product you want to see.
 
-### `npm run build`
+## Libraries used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The app uses Material UI components library.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## How does it work?
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To get, create, update & delete a product, this app sends/receives the data it needs from the backend through the API component located in src/api/api.js. At the same time it manages the functions and data with a reducer through a custom hook located in src/hooks/useHttp.js.

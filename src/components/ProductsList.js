@@ -26,7 +26,7 @@ const ProductsList = (props) => {
   };
 
   return (
-    <Grid container sx={{ justifyContent: "center" }}>
+    <Grid container>
       {products.map((product) => {
         return (
           <Product

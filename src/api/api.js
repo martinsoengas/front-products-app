@@ -2,8 +2,6 @@ const rootURI = process.env.REACT_APP_SERVER_URL
   ? process.env.REACT_APP_SERVER_URL
   : "http://localhost:4000";
 
-console.log(rootURI);
-
 export const getAllProducts = async () => {
   try {
     const response = await fetch(`${rootURI}/products`);
