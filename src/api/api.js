@@ -1,6 +1,8 @@
-const rootURI = process.env.SERVER_URL
-  ? process.env.SERVER_URL
+const rootURI = process.env.REACT_APP_SERVER_URL
+  ? process.env.REACT_APP_SERVER_URL
   : "http://localhost:4000";
+
+console.log(rootURI);
 
 export const getAllProducts = async () => {
   try {
@@ -17,10 +19,12 @@ export const getAllProducts = async () => {
     for (const key in data) {
       loadedProducts.push({
         id: data[key]._id,
-        name: data[key].name,
-        description: data[key].description,
-        image_url: data[key].image_url,
-        price: `$${data[key].price}`,
+        ...data[key],
+
+        // name: data[key].name,
+        // description: data[key].description,
+        // image_url: data[key].image_url,
+        // price: data[key].price,
       });
     }
 
