@@ -12,21 +12,9 @@ import { Stack } from "@mui/material";
 export default function MediaCard(props) {
   const { title, content, image, other_info } = props;
 
-  let defaultImage = "";
-
-  if (!image || image === "") {
-    defaultImage =
-      "http://cetilux.lu/wp-content/themes/dt-the7/images/noimage.jpg";
-  }
-
   return (
     <Card sx={{ width: "95%", margin: 1 }}>
-      <CardMedia
-        component="img"
-        height="200"
-        image={image ? image : defaultImage}
-        alt={title}
-      />
+      <CardMedia component="img" height="200" image={image} alt={title} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}
