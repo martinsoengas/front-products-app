@@ -25,14 +25,14 @@ If you want to connect locally to the remote backend you must create and .env fi
 You **get** the products automatically in the root URL '/'.\
 To **create** a product you have to press the **'NEW PRODUCT'** button located on the right side of the navbar. Then you must fill the form and press the **'CREATE'** button. A prompt will ask for confirmation.\
 To **update** a product you have to press the **'EDIT'** button located on the product you want to modify. A modal will open with the last data from the product. You can update any of the information and then press the **'SAVE'** button. a prompt will ask for confirmation.\
-To **delete** a product you have to press the **'DELETE'** button from the product you want to delete. A prompt will ask for confirmation.
+To **delete** a product you have to press the **'DELETE'** button from the product you want to delete. A prompt will ask for confirmation.\
 
 **Other functionality**
 You can view the detail of the product by pressing the 'VIEW' button from the product you want to see.
 
 ## Libraries used
 
-The app uses Material UI components library.
+The app uses Material UI components library. This was my first time using this library, so there might be some visual problems if accesing from mobile or small devices.
 
 ## How does it work?
 

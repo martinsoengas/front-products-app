@@ -41,7 +41,7 @@ export default function BasicModal(props) {
             {props.content}
           </Typography>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {props.other_info}
+            ${props.other_info}
           </Typography>
           <Box sx={{ width: "80%", margin: "0 auto" }}>
             <CardMedia component="img" image={props.image} alt={props.title} />

@@ -23,7 +23,7 @@ const Product = (props) => {
             {name}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
-            {price}
+            ${price}
           </Typography>
         </CardContent>
         <CardActions>
