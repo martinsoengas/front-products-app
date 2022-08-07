@@ -20,11 +20,6 @@ export const getAllProducts = async () => {
       loadedProducts.push({
         id: data[key]._id,
         ...data[key],
-
-        // name: data[key].name,
-        // description: data[key].description,
-        // image_url: data[key].image_url,
-        // price: data[key].price,
       });
     }
 
@@ -68,7 +63,7 @@ export const addOneProduct = async (newProduct) => {
       throw new Error(data.message || "Could not create customer");
     }
 
-    return null;
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -90,7 +85,7 @@ export const updateOneProduct = async (updateProduct) => {
       throw new Error(data.message || "Could not update customer");
     }
 
-    return null;
+    return data;
   } catch (error) {
     console.log(error);
   }

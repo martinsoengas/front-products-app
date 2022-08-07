@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import AllProducts from "./Pages/AllProducts";
 import NewProduct from "./Pages/NewProduct";
@@ -11,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<AllProducts />} />
         <Route path="/new-product" element={<NewProduct />} />
+        <Route path="/edited" element={<Navigate replace to="/" />} />
       </Routes>
     </Layout>
   );
