@@ -1,3 +1,7 @@
+# Proyect in progress...
+
+'user' validation and authentication in progress.
+
 # Getting Started with this Products App (Front end)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
