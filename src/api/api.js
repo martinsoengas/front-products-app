@@ -36,7 +36,7 @@ export const getOneProduct = async (productId) => {
     console.log(data);
 
     if (!response.ok) {
-      throw new Error(data.message || "Could not create customer");
+      throw new Error(data.message || "Could not create product");
     }
 
     return data;
@@ -58,7 +58,7 @@ export const addOneProduct = async (newProduct) => {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || "Could not create customer");
+      throw new Error(data.message || "Could not create product");
     }
 
     return data;
@@ -77,10 +77,10 @@ export const updateOneProduct = async (updateProduct) => {
       },
     });
 
-    const data = response.json();
+    const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || "Could not update customer");
+      throw new Error(data.message || "Could not update product");
     }
 
     return data;
@@ -95,14 +95,34 @@ export const deleteOneProduct = async (deleteProductId) => {
       method: "DELETE",
     });
 
-    const data = response.json();
+    const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || "Could not delete customer");
+      throw new Error(data.message || "Could not delete product");
     }
 
     return null;
   } catch (error) {
     console.log(error);
   }
+};
+
+export const login = async (user) => {
+  const response = await fetch(`${rootURI}/login`, {
+    method: "POST",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Could not login");
+  }
+
+  console.log(data);
+
+  return data;
 };
