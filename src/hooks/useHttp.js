@@ -21,7 +21,7 @@ function httpReducer(state, action) {
     return {
       data: null,
       error: action.errorMessage,
-      status: "completed",
+      status: "error",
     };
   }
 
@@ -40,6 +40,7 @@ function useHttp(requestFunction, startWithPending = false) {
       dispatch({ type: "SEND" });
       try {
         const responseData = await requestFunction(requestData);
+
         dispatch({ type: "SUCCESS", responseData });
       } catch (error) {
         dispatch({

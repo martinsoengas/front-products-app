@@ -7,9 +7,16 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
+
 import ProductEditModal from "../utils/ProductEditModal";
+import { Fragment, useContext } from "react";
+import AuthContext from "../context/auth-context";
 
 const Product = (props) => {
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
+  const isAdmin = authCtx.isAdmin;
+
   const { id, name, description, price, image_url } = props;
 
   const deleteHandler = () => props.onDelete(id);
@@ -34,18 +41,26 @@ const Product = (props) => {
               image={image_url}
               other_info={price}
             />
-            <ProductEditModal
-              id={id}
-              name={name}
-              description={description}
-              image={image_url}
-              price={price}
-            />
-            <Typography variant="button">
-              <Button variant="contained" color="error" onClick={deleteHandler}>
-                Delete
-              </Button>
-            </Typography>
+            {isLoggedIn && isAdmin ? (
+              <Fragment>
+                <ProductEditModal
+                  id={id}
+                  name={name}
+                  description={description}
+                  image={image_url}
+                  price={price}
+                />
+                <Typography variant="button">
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={deleteHandler}
+                  >
+                    Delete
+                  </Button>
+                </Typography>
+              </Fragment>
+            ) : null}
           </Stack>
         </CardActions>
       </Card>

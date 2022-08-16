@@ -2,16 +2,18 @@ import ProductForm from "../components/ProductForm";
 import useHttp from "../hooks/useHttp";
 import { useNavigate } from "react-router-dom";
 import { addOneProduct } from "../api/api";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import CircularIndeterminate from "../Layout/CircularProgress";
+import AuthContext from "../context/auth-context";
 
 const NewProduct = () => {
+  const authCtx = useContext(AuthContext);
   const { sendRequest, status } = useHttp(addOneProduct);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (status === "completed") {
-      navigate("/");
+      navigate("/products", { replace: true });
     }
   }, [status, navigate]);
 
@@ -24,11 +26,11 @@ const NewProduct = () => {
   }
 
   const addProductHandler = (newProduct) => {
-    const confirmDelete = window.confirm(
+    const confirmAdd = window.confirm(
       "¿Are you sure do you want to create this new product?"
     );
-    if (confirmDelete === true) {
-      sendRequest(newProduct);
+    if (confirmAdd === true) {
+      sendRequest({ newProduct, authToken: authCtx.token });
     }
   };
 
