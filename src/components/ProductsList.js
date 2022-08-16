@@ -2,9 +2,11 @@ import Product from "./Product";
 import { Grid } from "@mui/material";
 import useHttp from "../hooks/useHttp";
 import { deleteOneProduct } from "../api/api";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import AuthContext from "../context/auth-context";
 
 const ProductsList = (props) => {
+  const authCtx = useContext(AuthContext);
   const [products, setProducts] = useState(props.products);
 
   const { sendRequest } = useHttp(deleteOneProduct);
@@ -18,7 +20,7 @@ const ProductsList = (props) => {
         const updatedProducts = prevProducts.filter(
           (product) => product.id !== productId
         );
-        sendRequest(productId);
+        sendRequest({ productId, authToken: authCtx.token });
 
         return updatedProducts;
       });

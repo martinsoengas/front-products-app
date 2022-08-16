@@ -1,29 +1,70 @@
 import { Card, CardContent, TextField, Grid, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useHttp from "../hooks/useHttp";
 import { login } from "../api/api";
+import AuthContext from "../context/auth-context";
+import CircularIndeterminate from "../Layout/CircularProgress";
+
+//MUI
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+//MUI
 
 const Login = () => {
-  const { sendRequest, status } = useHttp(login);
+  //MUI Password Functions
+  const [passwordValues, setPasswordValues] = useState({
+    password: "",
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setPasswordValues({ [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setPasswordValues({
+      ...passwordValues,
+      showPassword: !passwordValues.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  //MUI
+
+  const { sendRequest, status, data } = useHttp(login);
+  const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (status === "completed") {
-      navigate("/");
-    }
-  }, [status, navigate]);
+      if (data.error) {
+        setError(data.error);
+        return;
+      }
+      if (data) {
+        authCtx.setId(data._id);
+        authCtx.login(data.token);
+        authCtx.setIsAdmin(data.isAdmin);
 
-  const [email, setName] = useState("");
-  const [password, setPrice] = useState("");
+        navigate("/products", { replace: true });
+      }
+    }
+  }, [status, data, navigate, authCtx]);
+
+  const [email, setEmail] = useState("");
 
   const emailChangeHandler = (e) => {
-    setName(e.target.value);
-  };
-
-  const passwordChangeHandler = (e) => {
-    setPrice(e.target.value);
+    setEmail(e.target.value);
   };
 
   const submitHandler = (e) => {
@@ -31,17 +72,21 @@ const Login = () => {
 
     const userCredentials = {
       email,
-      password,
+      password: passwordValues.password,
     };
 
     sendRequest(userCredentials);
   };
 
+  if (status === "pending") {
+    return <CircularIndeterminate />;
+  }
+
   return (
-    <Card sx={{ width: "80%", margin: "0 auto", height: "500" }}>
+    <Card sx={{ width: "50%", margin: "0 auto", height: "500" }}>
       <CardContent>
         <Typography variant="h4" component="div" gutterBottom>
-          Please Log in
+          {error ? error.toString() : "Please Log in"}
         </Typography>
         <form noValidate autoComplete="off" onSubmit={submitHandler}>
           <Grid container spacing={2}>
@@ -54,15 +99,38 @@ const Login = () => {
                 onChange={emailChangeHandler}
               />
             </Grid>
+
             <Grid item xs={12}>
-              <TextField
-                label="Password"
-                variant="outlined"
-                fullWidth
-                required
-                onChange={passwordChangeHandler}
-              />
+              <FormControl sx={{ width: "100%" }} variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password *
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={passwordValues.showPassword ? "text" : "password"}
+                  value={passwordValues.password}
+                  onChange={handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {passwordValues.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password *"
+                />
+              </FormControl>
             </Grid>
+
             <Grid item xs={2}>
               <Button type="submit" variant="contained">
                 Login

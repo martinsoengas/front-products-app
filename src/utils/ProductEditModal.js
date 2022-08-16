@@ -3,11 +3,13 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { useState, useEffect } from "react";
 import { Grid, TextField, Stack } from "@mui/material";
+
+import { useState, useEffect, useContext } from "react";
 import useHttp from "../hooks/useHttp";
 import { updateOneProduct } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/auth-context";
 
 const style = {
   position: "absolute",
@@ -21,6 +23,7 @@ const style = {
 };
 
 export default function ProductEditModal(props) {
+  const authCtx = useContext(AuthContext);
   const { sendRequest, status } = useHttp(updateOneProduct);
   const navigate = useNavigate();
 
@@ -64,7 +67,7 @@ export default function ProductEditModal(props) {
         price: price,
       };
 
-      sendRequest(productEdited);
+      sendRequest({ productEdited, authToken: authCtx.token });
     }
   };
 
