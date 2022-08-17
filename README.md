@@ -1,7 +1,3 @@
-# Proyect in progress...
-
-'user' validation and authentication in progress.
-
 # Getting Started with this Products App (Front end)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -10,7 +6,7 @@ This app is up and running on Vercel. You can access [here](https://front-produc
 
 ## Features of this app
 
-In this project you can get, create, modify & delete products.
+In this project you can get, create, modify & delete products (if you are an admin), if you are a user, you can only see the products and its detail.
 
 ## Setting up local enviroment
 
@@ -23,6 +19,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 You should see all the products in a grid.
 
 If you want to connect locally to the remote backend you must create and .env file and set up the enviromental variable 'REACT_APP_SERVER_URL' to the backend URL: '
+
+## How to log in or log out?
+
+You can log in as an admin with credentials. After login in you will have access to create, edit, view or delete products. If you log in with nomral-user credentials, you will be able just to see the products.
+After login in, you will have access to a button for log out.
 
 ## How to get, create, update or delete a product?
 
