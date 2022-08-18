@@ -22,8 +22,8 @@ const Product = (props) => {
   const deleteHandler = () => props.onDelete(id);
 
   return (
-    <Grid item md={4}>
-      <Card sx={{ width: "95%", margin: 1 }}>
+    <Grid item xs={12} sm={6} md={4}>
+      <Card sx={{ margin: 1 }}>
         <CardMedia component="img" height="200" image={image_url} alt={name} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

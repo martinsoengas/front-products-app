@@ -74,7 +74,7 @@ const ProductForm = (props) => {
   };
 
   return (
-    <Card sx={{ width: "80%", margin: "0 auto", height: "500" }}>
+    <Card sx={{ margin: "0 auto", maxWidth: "600px", marginTop: "3rem" }}>
       <CardContent>
         <Typography variant="h4" component="div" gutterBottom>
           Create new product
@@ -84,7 +84,7 @@ const ProductForm = (props) => {
         </Typography>
         <form noValidate autoComplete="off" onSubmit={submitHandler}>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 error={nameError ? true : false}
                 label={nameError ? "Please insert a valid name" : "Name"}
@@ -96,7 +96,7 @@ const ProductForm = (props) => {
                 inputProps={{ maxLength: 30 }}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 error={priceError ? true : false}
                 label={priceError ? "Please insert a valid price" : "Price"}
