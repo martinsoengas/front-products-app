@@ -15,6 +15,8 @@ const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
+  maxWidth: "700px",
+  minWidth: "330px",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   border: "1px solid #000",
@@ -38,23 +40,60 @@ export default function ProductEditModal(props) {
   const [image, setImage] = useState(props.image);
   const [price, setPrice] = useState(props.price);
 
+  const [nameError, setNameError] = useState(false);
+  const [priceError, setPriceError] = useState(false);
+  const [descriptionError, setDescriptionError] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
   const nameChangeHandler = (e) => {
+    if (e) {
+      setNameError(false);
+    }
     setName(e.target.value);
   };
 
   const descriptionChangeHandler = (e) => {
+    if (e) {
+      setDescriptionError(false);
+    }
     setDescription(e.target.value);
   };
 
   const imageChangeHandler = (e) => {
+    if (e) {
+      setImageError(false);
+    }
     setImage(e.target.value);
   };
 
   const priceChangeHandler = (e) => {
+    if (e) {
+      setPriceError(false);
+    }
     setPrice(e.target.value);
   };
 
   const saveEditHandler = () => {
+    if (!name) {
+      setNameError(true);
+      return;
+    }
+
+    if (!price || isNaN(price)) {
+      setPriceError(true);
+      return;
+    }
+
+    if (!description) {
+      setDescriptionError(true);
+      return;
+    }
+
+    if (!image) {
+      setImageError(true);
+      return;
+    }
+
     const confirmDelete = window.confirm(
       "¿Are you sure do you want to edit this product?"
     );
@@ -95,9 +134,10 @@ export default function ProductEditModal(props) {
                 Edit Product
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
-                label="Name"
+                error={nameError ? true : false}
+                label={nameError ? "Please insert a valid name" : "Name"}
                 variant="outlined"
                 required
                 fullWidth
@@ -105,19 +145,26 @@ export default function ProductEditModal(props) {
                 onChange={nameChangeHandler}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
-                label="Price"
+                error={priceError ? true : false}
+                label={priceError ? "Please insert a valid price" : "Price"}
                 variant="outlined"
                 required
                 fullWidth
                 value={price}
+                helperText={priceError ? "Only numbers" : null}
                 onChange={priceChangeHandler}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                label="Description"
+                error={descriptionError ? true : false}
+                label={
+                  descriptionError
+                    ? "Please insert a valid description"
+                    : "Description"
+                }
                 variant="outlined"
                 fullWidth
                 multiline
@@ -129,7 +176,10 @@ export default function ProductEditModal(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                label="Image URL"
+                error={imageError ? true : false}
+                label={
+                  imageError ? "Please insert a valid image URL" : "Image URL"
+                }
                 variant="outlined"
                 fullWidth
                 required

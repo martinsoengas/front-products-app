@@ -1,5 +1,3 @@
-import { Card, CardContent, TextField, Grid, Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useHttp from "../hooks/useHttp";
@@ -8,38 +6,18 @@ import AuthContext from "../context/auth-context";
 import CircularIndeterminate from "../Layout/CircularProgress";
 
 //MUI
-import IconButton from "@mui/material/IconButton";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-//MUI
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import { Card } from "@mui/material";
+import TextField from "@mui/material/TextField";
 
-const Login = () => {
-  //MUI Password Functions
-  const [passwordValues, setPasswordValues] = useState({
-    password: "",
-    showPassword: false,
-  });
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 
-  const handleChange = (prop) => (event) => {
-    setPasswordValues({ [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setPasswordValues({
-      ...passwordValues,
-      showPassword: !passwordValues.showPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  //MUI
-
+export default function SignIn() {
   const { sendRequest, status, data } = useHttp(login);
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -62,17 +40,40 @@ const Login = () => {
   }, [status, data, navigate, authCtx]);
 
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const emailChangeHandler = (e) => {
+    if (e) {
+      setEmailError(false);
+    }
     setEmail(e.target.value);
+  };
+
+  const passwordChangeHandler = (e) => {
+    if (e) {
+      setPasswordError(false);
+    }
+    setPassword(e.target.value);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
 
+    if (!email) {
+      setEmailError(true);
+      return;
+    }
+    if (!password) {
+      setPasswordError(true);
+      return;
+    }
+
     const userCredentials = {
       email,
-      password: passwordValues.password,
+      password,
     };
 
     sendRequest(userCredentials);
@@ -83,64 +84,71 @@ const Login = () => {
   }
 
   return (
-    <Card sx={{ width: "50%", margin: "0 auto", height: "500" }}>
-      <CardContent>
-        <Typography variant="h4" component="div" gutterBottom>
-          {error ? error.toString() : "Please Log in"}
+    <Container component="main" maxWidth="xs" sx={{ marginTop: "3rem" }}>
+      <Card>
+        <Typography
+          variant="h4"
+          component="div"
+          gutterBottom
+          textAlign={"center"}
+        >
+          {error ? error.toString() : null}
         </Typography>
-        <form noValidate autoComplete="off" onSubmit={submitHandler}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                label="Email"
-                variant="outlined"
-                fullWidth
-                required
-                onChange={emailChangeHandler}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <FormControl sx={{ width: "100%" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password *
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={passwordValues.showPassword ? "text" : "password"}
-                  value={passwordValues.password}
-                  onChange={handleChange("password")}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {passwordValues.showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password *"
-                />
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={2}>
-              <Button type="submit" variant="contained">
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </CardContent>
-    </Card>
+        <Box
+          sx={{
+            margin: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Log in
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={submitHandler}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={emailChangeHandler}
+              error={emailError ? true : false}
+              label={emailError ? "Please insert a valid email" : "Email"}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={passwordChangeHandler}
+              error={passwordError ? true : false}
+              label={passwordError ? "Please insert a valid email" : "Password"}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Log In
+            </Button>
+          </Box>
+        </Box>
+      </Card>
+    </Container>
   );
-};
-
-export default Login;
+}
